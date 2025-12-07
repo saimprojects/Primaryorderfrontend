@@ -5,7 +5,8 @@ import ProductCard from '../components/ProductCard';
 import { 
     FaFire, FaGift, FaShieldAlt, FaShippingFast, 
     FaArrowRight, FaTrophy, FaPercent, FaCrown,
-    FaClock, FaUsers, FaEye, FaTag, FaStar
+    FaClock, FaUsers, FaEye, FaTag, FaStar,
+    FaShoppingCart, FaUserFriends, FaBolt, FaChartLine
 } from 'react-icons/fa';
 import CountdownTimer from '../components/CountdownTimer';
 
@@ -17,8 +18,26 @@ const HomePage = () => {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('trending');
     const [viewedProducts, setViewedProducts] = useState([]);
+    const [liveStats, setLiveStats] = useState({
+        purchases: 0,
+        usersOnline: 0,
+        dealsClaimed: 0
+    });
     
     const saleEndTimeRef = useRef(new Date(Date.now() + 24 * 60 * 60 * 1000));
+
+    // Simulate live stats
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setLiveStats(prev => ({
+                purchases: prev.purchases + Math.floor(Math.random() * 3),
+                usersOnline: 150 + Math.floor(Math.random() * 50),
+                dealsClaimed: prev.dealsClaimed + Math.floor(Math.random() * 2)
+            }));
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     // Format price in PKR
     const formatPrice = (price) => {
@@ -242,55 +261,121 @@ const HomePage = () => {
                                 </Link>
                             </div>
                             
-                            {/* REMOVED: Live Stats section (3+ Products Available, 1 Categories) */}
-                            {/* This section has been deleted as requested */}
+                            {/* Live Stats */}
+                            <div className="mt-10 flex flex-wrap gap-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-white bg-opacity-20 p-3 rounded-lg">
+                                        <FaUsers className="text-2xl" />
+                                    </div>
+                                    <div>
+                                        <div className="text-2xl font-bold">{products.length}+</div>
+                                        <div className="text-gray-300 text-sm">Products Available</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-white bg-opacity-20 p-3 rounded-lg">
+                                        <FaTag className="text-2xl" />
+                                    </div>
+                                    <div>
+                                        <div className="text-2xl font-bold">{categories.length}</div>
+                                        <div className="text-gray-300 text-sm">Categories</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        {/* Hero Image with Real Products */}
+                        {/* New FOMO Element - Live Shopping Activity */}
                         <div className="relative">
-                            <div className="relative bg-gradient-to-br from-[#FF5C00] to-orange-500 p-1 rounded-3xl shadow-2xl">
-                                <div className="bg-white rounded-2xl p-8">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        {products.slice(0, 4).map((product, index) => {
-                                            const discount = calculateDiscount(product);
-                                            const finalPrice = discount ? discount.discountedPrice : parseFloat(product.price || 0);
-                                            
-                                            return (
-                                                <div key={product.id || index} className="bg-gray-50 p-4 rounded-xl hover:shadow-lg transition-shadow">
-                                                    <img 
-                                                        src={product.images?.[0]?.image_url || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop'} 
-                                                        alt={product.title}
-                                                        className="w-full h-32 object-cover rounded-lg"
-                                                    />
-                                                    <div className="mt-3">
-                                                        <div className="text-xs font-semibold text-gray-800 truncate">{product.title}</div>
-                                                        <div className="flex items-center gap-1">
-                                                            <div className="text-lg font-bold text-[#FF5C00]">
-                                                                {formatPrice(finalPrice)}
-                                                            </div>
-                                                            {discount && (
-                                                                <div className="text-xs text-gray-500 line-through">
-                                                                    {formatPrice(discount.originalPrice)}
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                        <div className="flex items-center justify-between mt-1">
-                                                            <div className="text-xs text-red-500 font-bold">
-                                                                🔥 {Math.floor(Math.random() * 50) + 20} sold
-                                                            </div>
-                                                            <div className="flex items-center text-xs text-yellow-500">
-                                                                <FaStar className="fill-current" />
-                                                                <span className="ml-1">{product.average_rating?.toFixed(1) || '0.0'}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                            <div className="relative bg-gradient-to-br from-[#FF5C00] to-orange-500 p-1 rounded-3xl shadow-2xl animate-pulse">
+                                <div className="bg-white rounded-2xl p-6 md:p-8">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-red-100 p-2 rounded-full">
+                                                <FaBolt className="text-red-600 text-xl" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-gray-800 text-lg">Live Shopping Activity</h3>
+                                                <p className="text-gray-600 text-sm">Happening right now!</p>
+                                            </div>
+                                        </div>
+                                        <div className="relative">
+                                            <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                        </div>
                                     </div>
-                                    <div className="mt-6 text-center">
-                                        <div className="inline-flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-full">
-                                            <FaClock /> {products.length}+ products available!
+                                    
+                                    {/* Live Activity Feed */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                                    <FaUserFriends className="text-blue-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-medium text-gray-800">{liveStats.usersOnline}+ shoppers</div>
+                                                    <div className="text-xs text-gray-500">Online now</div>
+                                                </div>
+                                            </div>
+                                            <div className="text-green-600 font-bold animate-pulse">LIVE</div>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                                    <FaShoppingCart className="text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-medium text-gray-800">{liveStats.purchases} orders</div>
+                                                    <div className="text-xs text-gray-500">Last 5 minutes</div>
+                                                </div>
+                                            </div>
+                                            <div className="text-red-600 font-bold">
+                                                🔥 Hot
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                                    <FaChartLine className="text-purple-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-medium text-gray-800">{liveStats.dealsClaimed} deals</div>
+                                                    <div className="text-xs text-gray-500">Claimed recently</div>
+                                                </div>
+                                            </div>
+                                            <div className="text-orange-600 font-bold">
+                                                🚀 Trending
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* FOMO Message */}
+                                    <div className="mt-6 p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl border-l-4 border-red-500">
+                                        <div className="flex items-start gap-3">
+                                            <FaClock className="text-red-600 mt-1" />
+                                            <div>
+                                                <div className="font-bold text-gray-800 text-sm">Don't Miss Out!</div>
+                                                <div className="text-xs text-gray-600">
+                                                    Last {Math.floor(Math.random() * 20) + 10} people purchased in the last hour. 
+                                                    Sale ends when timer hits zero!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Hot Categories */}
+                                    <div className="mt-6">
+                                        <div className="text-sm font-bold text-gray-800 mb-3">🔥 Hot Categories Right Now:</div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {categories.slice(0, 4).map((category, index) => (
+                                                <div 
+                                                    key={category.id} 
+                                                    className="bg-gradient-to-r from-orange-100 to-red-100 px-3 py-1.5 rounded-full text-xs font-medium text-gray-800 border border-orange-200"
+                                                >
+                                                    {category.name}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
