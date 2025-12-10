@@ -1,6 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer"; // Add this import
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
@@ -8,9 +9,9 @@ import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Products from "./pages/Products"; // All products page
-import Categories from "./pages/Categories"; // Categories listing page
-import CategoryProducts from "./pages/CategoryProducts"; // Category specific products page
+import Products from "./pages/Products";
+import Categories from "./pages/Categories";
+import CategoryProducts from "./pages/CategoryProducts";
 import OrderDetail from "./pages/OrderDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
@@ -25,6 +26,21 @@ import ContactMessageDetail from "./components/contact/ContactMessageDetail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// 🔥 SCROLL TO TOP COMPONENT
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // Instant scroll (no animation)
+    });
+  }, [pathname]); // Runs every time route changes
+
+  return null;
+}
+
 function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
@@ -32,6 +48,9 @@ function App() {
       
       {/* Main content with flex-grow */}
       <div className="flex-grow">
+        {/* 🔥 ADD ScrollToTop HERE */}
+        <ScrollToTop />
+        
         <Routes>
           {/* Home Page */}
           <Route path="/" element={<Home />} />
@@ -71,8 +90,6 @@ function App() {
           <Route path="/return-refund-policy" element={<ReturnRefundPolicy />} />
           <Route path="/shipping-policy" element={<ShippingServicePolicy />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
-
-
 
           {/* 404 Page */}
           <Route
