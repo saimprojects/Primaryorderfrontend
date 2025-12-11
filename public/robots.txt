@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Block admin or internal routes (agar Django admin bhi domain par ho)
+Disallow: /admin/
+
+# Block contact messages (ye internal pages hain, SEO ka kaam nahi)
+Disallow: /contact/messages/
+Disallow: /contact/messages/*
+
+# Block orders & user dashboard pages (private content)
+Disallow: /orders/
+Disallow: /orders/*
+
+# Block cart & checkout from indexing (SEO ke liye useless)
+Disallow: /cart
+Disallow: /checkout
+
+# Block login & register pages
+Disallow: /login
+Disallow: /register
+
+# Sitemap location
+Sitemap: https://primaryorder.com/sitemap.xml
