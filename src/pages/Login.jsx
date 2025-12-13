@@ -6,7 +6,8 @@ import {
     FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, 
     FaGoogle, FaFacebookF, FaApple, FaArrowRight,
     FaShieldAlt, FaTruck, FaGift, FaShoppingBag,
-    FaStar, FaRegUserPlus, FaArrowCircleRight
+    FaStar, FaRegUserPlus, FaArrowCircleRight,
+    FaPlusCircle, FaCheckCircle, FaRocket
 } from 'react-icons/fa';
 
 const Login = () => {
@@ -99,7 +100,7 @@ const Login = () => {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="bg-white/20 p-2 rounded-full">
-                                <FaStar />
+                                <FaPlusCircle />
                             </div>
                             <div>
                                 <p className="font-bold text-sm">NEW HERE? GET STARTED!</p>
@@ -129,7 +130,7 @@ const Login = () => {
                             <div className="relative z-10">
                                 <div className="flex items-center gap-3 mb-4">
                                     <div className="bg-white/30 p-3 rounded-full">
-                                        <FaRegUserPlus className="text-2xl" />
+                                        <FaRocket className="text-2xl" />
                                     </div>
                                     <div>
                                         <h2 className="text-2xl font-bold">New to PrimaryOrder?</h2>
@@ -164,12 +165,39 @@ const Login = () => {
 
                         {/* Login Form Card */}
                         <div className="bg-white rounded-3xl shadow-2xl p-8">
-                            {/* Header */}
+                            {/* Header with Enhanced New Account Visibility */}
                             <div className="text-center mb-8">
                                 <h1 className="text-3xl font-bold text-[#1A1A1A] mb-2">
                                     Welcome Back! 👋
                                 </h1>
-                                <p className="text-gray-600">
+                                
+                                {/* Enhanced "Create New Account" Section - MADE MORE VISIBLE */}
+                                <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-emerald-200 rounded-2xl shadow-sm">
+                                    <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <FaPlusCircle className="text-emerald-600 text-lg" />
+                                            <span className="text-lg font-bold text-emerald-800">
+                                                Don't have an account?
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <FaCheckCircle className="text-green-600" />
+                                            <span className="text-sm text-emerald-700 font-medium">
+                                                Create one in 30 seconds!
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <Link 
+                                        to="/register" 
+                                        className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-6 py-3 rounded-xl text-sm hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-pulse"
+                                    >
+                                        <FaRegUserPlus />
+                                        <span className="font-extrabold">CREATE A NEW ACCOUNT</span>
+                                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </div>
+                                
+                                <p className="text-gray-600 text-lg">
                                     Sign in to continue your shopping journey
                                 </p>
                             </div>
@@ -300,20 +328,36 @@ const Login = () => {
 
                             {/* Enhanced Register Link */}
                             <div className="text-center pt-6 border-t border-gray-200">
-                                <p className="text-gray-600 mb-4">
-                                    Don't have an account yet?
-                                </p>
+                                <div className="mb-4">
+                                    <p className="text-gray-600 text-lg font-semibold mb-2">
+                                        Ready to join PrimaryOrder?
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        Create your account and unlock exclusive benefits
+                                    </p>
+                                </div>
                                 <Link 
                                     to="/register" 
-                                    className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                    className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl animate-bounce-slow"
                                 >
-                                    <FaRegUserPlus />
-                                    <span className="font-extrabold">CREATE YOUR FREE ACCOUNT</span>
+                                    <FaRegUserPlus className="text-xl" />
+                                    <span className="font-extrabold">CREATE A NEW ACCOUNT</span>
                                     <FaArrowRight />
                                 </Link>
-                                <p className="text-sm text-gray-500 mt-4">
-                                    Join 100,000+ happy customers • Get exclusive deals • Fast checkout
-                                </p>
+                                <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-gray-500">
+                                    <div className="flex items-center gap-1">
+                                        <FaCheckCircle className="text-green-500" />
+                                        <span>Free</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <FaCheckCircle className="text-green-500" />
+                                        <span>Quick</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <FaCheckCircle className="text-green-500" />
+                                        <span>Secure</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -464,7 +508,7 @@ const Login = () => {
                         className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-10 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
                         <FaRegUserPlus className="text-xl" />
-                        <span className="font-extrabold">SIGN UP NOW - IT'S FREE!</span>
+                        <span className="font-extrabold">CREATE A NEW ACCOUNT - IT'S FREE!</span>
                         <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
                     </Link>
                 </div>
@@ -479,6 +523,21 @@ const Login = () => {
                     <p>© 2024 PrimaryOrder. All rights reserved.</p>
                 </div>
             </div>
+            
+            {/* Add custom CSS for smooth animation */}
+            <style jsx>{`
+                @keyframes bounce-slow {
+                    0%, 100% {
+                        transform: translateY(0);
+                    }
+                    50% {
+                        transform: translateY(-5px);
+                    }
+                }
+                .animate-bounce-slow {
+                    animation: bounce-slow 2s infinite;
+                }
+            `}</style>
         </div>
     );
 };
