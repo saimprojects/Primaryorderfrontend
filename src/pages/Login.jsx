@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { 
     FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, 
     FaGoogle, FaFacebookF, FaApple, FaArrowRight,
-    FaShieldAlt, FaTruck, FaGift, FaShoppingBag
+    FaShieldAlt, FaTruck, FaGift, FaShoppingBag,
+    FaStar, FaRegUserPlus, FaArrowCircleRight
 } from 'react-icons/fa';
 
 const Login = () => {
@@ -59,151 +60,261 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-            {/* Top Brand Bar */}
-            <div className="bg-[#1A1A1A] text-white">
+            {/* Top Brand Bar - Enhanced with stronger register CTA */}
+            <div className="bg-gradient-to-r from-[#1A1A1A] to-[#2D2D2D] text-white shadow-lg">
                 <div className="container mx-auto px-4 py-3">
-                    <div className="flex items-center justify-between">
-                        <Link to="/" className="flex items-center gap-2">
-                            <div className="text-2xl text-[#FF5C00]">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                        <Link to="/" className="flex items-center gap-3 group">
+                            <div className="text-3xl text-[#FF5C00] group-hover:scale-110 transition-transform duration-300">
                                 <FaShoppingBag />
                             </div>
-                            <span className="text-xl font-bold">PrimaryOrder</span>
+                            <div>
+                                <span className="text-2xl font-bold block">PrimaryOrder</span>
+                                <span className="text-xs text-gray-300">Premium Shopping Experience</span>
+                            </div>
                         </Link>
-                        <div className="text-sm">
-                            <span className="text-gray-400">New to PrimaryOrder? </span>
-                            <Link to="/register" className="text-[#FF5C00] font-bold hover:underline">
-                                Create Account
+                        
+                        {/* Prominent Register Button */}
+                        <div className="flex items-center gap-4">
+                            <div className="hidden md:block text-right">
+                                <p className="text-sm text-gray-300">New to PrimaryOrder?</p>
+                                <p className="text-lg font-bold text-white">Join thousands of happy shoppers</p>
+                            </div>
+                            <Link 
+                                to="/register" 
+                                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 group whitespace-nowrap"
+                            >
+                                <FaRegUserPlus className="text-xl" />
+                                <span className="font-extrabold">CREATE FREE ACCOUNT</span>
+                                <FaArrowCircleRight className="group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-8">
-                <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-                    {/* Left Column - Login Form */}
-                    <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
-                        {/* Header */}
-                        <div className="text-center mb-10">
-                            <h1 className="text-4xl font-bold text-[#1A1A1A] mb-3">
-                                Welcome Back! 👋
-                            </h1>
-                            <p className="text-gray-600 text-lg">
-                                Sign in to continue shopping and discover amazing deals
-                            </p>
+            {/* Mobile Register Banner */}
+            <div className="md:hidden bg-gradient-to-r from-[#FF5C00] to-orange-500 text-white">
+                <div className="container mx-auto px-4 py-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-white/20 p-2 rounded-full">
+                                <FaStar />
+                            </div>
+                            <div>
+                                <p className="font-bold text-sm">NEW HERE? GET STARTED!</p>
+                                <p className="text-xs opacity-90">Create account in 30 seconds</p>
+                            </div>
                         </div>
+                        <Link 
+                            to="/register" 
+                            className="bg-white text-[#FF5C00] font-bold px-4 py-2 rounded-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 text-sm shadow-md"
+                        >
+                            SIGN UP FREE
+                        </Link>
+                    </div>
+                </div>
+            </div>
 
-                        {/* Login Form */}
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Email Field */}
-                            <div className="space-y-2">
-                                <label className="block text-gray-700 font-medium">
-                                    Email Address
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                                        <FaEnvelope />
+            <div className="container mx-auto px-4 py-8">
+                <div className="grid lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+                    {/* Left Column - Login Form with Prominent Register CTA */}
+                    <div className="space-y-8">
+                        {/* Prominent Register Card for New Users */}
+                        <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-8 text-white relative overflow-hidden">
+                            {/* Animated Background */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                            <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-x-20 translate-y-20"></div>
+                            
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="bg-white/30 p-3 rounded-full">
+                                        <FaRegUserPlus className="text-2xl" />
                                     </div>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your email"
-                                        className="w-full border-2 border-gray-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#FF5C00] focus:ring-2 focus:ring-[#FF5C00]/20 transition-all duration-300"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Password Field */}
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-center">
-                                    <label className="block text-gray-700 font-medium">
-                                        Password
-                                    </label>
-                                </div>
-                                <div className="relative">
-                                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                                        <FaLock />
+                                    <div>
+                                        <h2 className="text-2xl font-bold">New to PrimaryOrder?</h2>
+                                        <p className="text-white/90">Join our community of happy shoppers</p>
                                     </div>
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Enter your password"
-                                        className="w-full border-2 border-gray-200 rounded-xl py-4 pl-12 pr-12 focus:outline-none focus:border-[#FF5C00] focus:ring-2 focus:ring-[#FF5C00]/20 transition-all duration-300"
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                                    >
-                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Remember Me & Error */}
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        id="remember"
-                                        checked={rememberMe}
-                                        onChange={(e) => setRememberMe(e.target.checked)}
-                                        className="w-5 h-5 rounded border-gray-300 text-[#FF5C00] focus:ring-[#FF5C00]"
-                                    />
-                                    <label htmlFor="remember" className="ml-2 text-gray-700">
-                                        Remember me
-                                    </label>
                                 </div>
                                 
-                                {authError && (
-                                    <div className="text-red-500 text-sm font-medium animate-shake">
-                                        {authError}
+                                <div className="grid grid-cols-2 gap-4 mb-6">
+                                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                                        <div className="font-bold text-lg">🚀 Quick Setup</div>
+                                        <div className="text-sm opacity-90">30 seconds registration</div>
                                     </div>
-                                )}
-                            </div>
-
-                            {/* Login Button */}
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className={`w-full bg-gradient-to-r from-[#FF5C00] to-orange-500 text-white font-bold py-4 rounded-xl text-lg hover:from-[#E55100] hover:to-orange-600 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center gap-3 ${
-                                    loading && 'opacity-70 cursor-not-allowed'
-                                }`}
-                            >
-                                {loading ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                                        Signing in...
-                                    </>
-                                ) : (
-                                    <>
-                                        Sign In
-                                        <FaArrowRight />
-                                    </>
-                                )}
-                            </button>
-                        </form>
-
-
-
-                        {/* Register Link */}
-                        <div className="text-center pt-6 border-t">
-                            <p className="text-gray-600">
-                                Don't have an account?{' '}
+                                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                                        <div className="font-bold text-lg">🎁 Welcome Bonus</div>
+                                        <div className="text-sm opacity-90">Get 20% OFF first order</div>
+                                    </div>
+                                </div>
+                                
                                 <Link 
                                     to="/register" 
-                                    className="text-[#FF5C00] font-bold hover:text-[#E55100] hover:underline"
+                                    className="block w-full bg-white text-[#FF5C00] font-extrabold text-center py-4 rounded-xl text-lg hover:bg-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-3 group"
                                 >
-                                    Sign up for free
+                                    <span>CREATE YOUR FREE ACCOUNT</span>
+                                    <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
                                 </Link>
-                            </p>
-                            <p className="text-sm text-gray-500 mt-2">
-                                Join 100,000+ happy customers shopping on PrimaryOrder
-                            </p>
+                                
+                                <p className="text-center mt-4 text-sm opacity-90">
+                                    No credit card required • 100,000+ members
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Login Form Card */}
+                        <div className="bg-white rounded-3xl shadow-2xl p-8">
+                            {/* Header */}
+                            <div className="text-center mb-8">
+                                <h1 className="text-3xl font-bold text-[#1A1A1A] mb-2">
+                                    Welcome Back! 👋
+                                </h1>
+                                <p className="text-gray-600">
+                                    Sign in to continue your shopping journey
+                                </p>
+                            </div>
+
+                            {/* Login Form */}
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                {/* Email Field */}
+                                <div className="space-y-2">
+                                    <label className="block text-gray-700 font-medium">
+                                        Email Address
+                                    </label>
+                                    <div className="relative">
+                                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                            <FaEnvelope />
+                                        </div>
+                                        <input
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder="Enter your email"
+                                            className="w-full border-2 border-gray-200 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#FF5C00] focus:ring-2 focus:ring-[#FF5C00]/20 transition-all duration-300"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Password Field */}
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-center">
+                                        <label className="block text-gray-700 font-medium">
+                                            Password
+                                        </label>
+                                        <Link 
+                                            to="/forgot-password" 
+                                            className="text-sm text-[#FF5C00] hover:underline font-medium"
+                                        >
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
+                                    <div className="relative">
+                                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                            <FaLock />
+                                        </div>
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="Enter your password"
+                                            className="w-full border-2 border-gray-200 rounded-xl py-4 pl-12 pr-12 focus:outline-none focus:border-[#FF5C00] focus:ring-2 focus:ring-[#FF5C00]/20 transition-all duration-300"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        >
+                                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Remember Me & Error */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="remember"
+                                            checked={rememberMe}
+                                            onChange={(e) => setRememberMe(e.target.checked)}
+                                            className="w-5 h-5 rounded border-gray-300 text-[#FF5C00] focus:ring-[#FF5C00]"
+                                        />
+                                        <label htmlFor="remember" className="ml-2 text-gray-700">
+                                            Remember me
+                                        </label>
+                                    </div>
+                                    
+                                    {authError && (
+                                        <div className="text-red-500 text-sm font-medium animate-shake">
+                                            {authError}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Login Button */}
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className={`w-full bg-gradient-to-r from-[#FF5C00] to-orange-500 text-white font-bold py-4 rounded-xl text-lg hover:from-[#E55100] hover:to-orange-600 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center gap-3 ${
+                                        loading && 'opacity-70 cursor-not-allowed'
+                                    }`}
+                                >
+                                    {loading ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                                            Signing in...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Sign In
+                                            <FaArrowRight />
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+
+                            {/* Divider */}
+                            <div className="flex items-center my-8">
+                                <div className="flex-grow border-t border-gray-200"></div>
+                                <span className="mx-4 text-gray-500 font-medium">OR CONTINUE WITH</span>
+                                <div className="flex-grow border-t border-gray-200"></div>
+                            </div>
+
+                            {/* Social Login Buttons */}
+                            <div className="grid grid-cols-3 gap-4 mb-8">
+                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 group">
+                                    <FaGoogle className="text-red-500 group-hover:scale-110 transition-transform" />
+                                    <span className="font-medium hidden sm:inline">Google</span>
+                                </button>
+                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-blue-600 hover:bg-blue-50 transition-all duration-300 group">
+                                    <FaFacebookF className="text-blue-600 group-hover:scale-110 transition-transform" />
+                                    <span className="font-medium hidden sm:inline">Facebook</span>
+                                </button>
+                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-gray-800 hover:bg-gray-50 transition-all duration-300 group">
+                                    <FaApple className="text-gray-800 group-hover:scale-110 transition-transform" />
+                                    <span className="font-medium hidden sm:inline">Apple</span>
+                                </button>
+                            </div>
+
+                            {/* Enhanced Register Link */}
+                            <div className="text-center pt-6 border-t border-gray-200">
+                                <p className="text-gray-600 mb-4">
+                                    Don't have an account yet?
+                                </p>
+                                <Link 
+                                    to="/register" 
+                                    className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                >
+                                    <FaRegUserPlus />
+                                    <span className="font-extrabold">CREATE YOUR FREE ACCOUNT</span>
+                                    <FaArrowRight />
+                                </Link>
+                                <p className="text-sm text-gray-500 mt-4">
+                                    Join 100,000+ happy customers • Get exclusive deals • Fast checkout
+                                </p>
+                            </div>
                         </div>
                     </div>
 
@@ -341,8 +452,23 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Bottom Info */}
+            {/* Bottom Info with Register CTA */}
             <div className="container mx-auto px-4 py-8">
+                <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-3xl p-8 text-white text-center mb-8">
+                    <h3 className="text-2xl font-bold mb-4">Ready to Join PrimaryOrder?</h3>
+                    <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+                        Create your free account today and start shopping from thousands of products with exclusive member benefits.
+                    </p>
+                    <Link 
+                        to="/register" 
+                        className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-10 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    >
+                        <FaRegUserPlus className="text-xl" />
+                        <span className="font-extrabold">SIGN UP NOW - IT'S FREE!</span>
+                        <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                </div>
+                
                 <div className="text-center text-gray-500 text-sm">
                     <p className="mb-2">
                         By signing in, you agree to our{' '}
