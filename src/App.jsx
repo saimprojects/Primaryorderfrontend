@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
@@ -26,7 +28,10 @@ import ContactMessageDetail from "./components/contact/ContactMessageDetail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// 🔥 SCROLL TO TOP COMPONENT
+// 🔥 META PIXEL
+import { initMetaPixel, trackPageView } from "./utils/metaPixel";
+
+// 🔥 SCROLL TO TOP
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -34,28 +39,38 @@ function ScrollToTop() {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: "instant", // Instant scroll (no animation)
+      behavior: "instant",
     });
-  }, [pathname]); // Runs every time route changes
+  }, [pathname]);
 
   return null;
 }
 
 function App() {
+  const location = useLocation();
+
+  // ✅ Init Meta Pixel ONCE
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
+
+  // ✅ Track PageView on EVERY route change (SPA fix)
+  useEffect(() => {
+    trackPageView();
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
       <Navbar />
-      
-      {/* Main content with flex-grow */}
+
       <div className="flex-grow">
-        {/* 🔥 ADD ScrollToTop HERE */}
         <ScrollToTop />
-        
+
         <Routes>
-          {/* Home Page */}
+          {/* Home */}
           <Route path="/" element={<Home />} />
 
-          {/* Contact Pages */}
+          {/* Contact */}
           <Route path="/contact" element={<ContactForm />} />
           <Route path="/contact/messages" element={<ContactMessages />} />
           <Route
@@ -63,11 +78,11 @@ function App() {
             element={<ContactMessageDetail />}
           />
 
-          {/* Products Pages */}
+          {/* Products */}
           <Route path="/products" element={<Products />} />
           <Route path="/product/:slug" element={<ProductDetail />} />
 
-          {/* Categories Pages */}
+          {/* Categories */}
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:slug" element={<CategoryProducts />} />
 
@@ -75,23 +90,26 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
 
-          {/* User Account */}
+          {/* User */}
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/orders/:id" element={<OrderDetail />} />
 
-          {/* Additional Pages (if needed in future) */}
+          {/* Extra */}
           <Route path="/flash-sale" element={<Products />} />
           <Route path="/deals" element={<Products />} />
 
-          {/* Legal Pages */}
+          {/* Legal */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/return-refund-policy" element={<ReturnRefundPolicy />} />
-          <Route path="/shipping-policy" element={<ShippingServicePolicy />} />
+          <Route
+            path="/shipping-policy"
+            element={<ShippingServicePolicy />}
+          />
           <Route path="/terms-conditions" element={<TermsConditions />} />
 
-          {/* 404 Page */}
+          {/* 404 */}
           <Route
             path="*"
             element={
@@ -107,27 +125,15 @@ function App() {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
                       href="/"
-                      className="bg-[#FF5C00] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#E55100] transition-colors"
+                      className="bg-[#FF5C00] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#E55100]"
                     >
                       Go Home
                     </a>
                     <a
                       href="/products"
-                      className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors"
+                      className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-bold hover:bg-gray-300"
                     >
                       Browse Products
-                    </a>
-                    <a
-                      href="/contact"
-                      className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors"
-                    >
-                      Contact Support
-                    </a>
-                    <a
-                      href="/help"
-                      className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors"
-                    >
-                      Get Help
                     </a>
                   </div>
                 </div>
@@ -136,19 +142,14 @@ function App() {
           />
         </Routes>
       </div>
-      
-      {/* Footer added here */}
+
       <Footer />
-      
+
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
-        hideProgressBar={false}
         newestOnTop
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme="colored"
       />
