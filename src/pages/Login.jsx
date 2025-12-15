@@ -2,13 +2,27 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { 
-    FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, 
-    FaGoogle, FaFacebookF, FaApple, FaArrowRight,
-    FaShieldAlt, FaTruck, FaGift, FaShoppingBag,
-    FaStar, FaRegUserPlus, FaArrowCircleRight,
-    FaPlusCircle, FaCheckCircle, FaRocket
-} from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaLock,
+  FaUser,
+  FaEye,
+  FaEyeSlash,
+  FaGoogle,
+  FaFacebookF,
+  FaApple,
+  FaArrowRight,
+  FaShieldAlt,
+  FaTruck,
+  FaGift,
+  FaShoppingBag,
+  FaStar,
+  FaUserPlus,
+  FaArrowCircleRight,
+  FaPlusCircle,
+  FaCheckCircle,
+  FaRocket
+} from "react-icons/fa";
 
 const Login = () => {
     const { login, loading, authError } = useContext(AuthContext);
@@ -85,7 +99,7 @@ const Login = () => {
                                 to="/register" 
                                 className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 group whitespace-nowrap"
                             >
-                                <FaRegUserPlus className="text-xl" />
+                                <FaUserPlus className="text-xl" />
                                 <span className="font-extrabold">CREATE FREE ACCOUNT</span>
                                 <FaArrowCircleRight className="group-hover:translate-x-1 transition-transform" />
                             </Link>
@@ -191,7 +205,7 @@ const Login = () => {
                                         to="/register" 
                                         className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-6 py-3 rounded-xl text-sm hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-pulse"
                                     >
-                                        <FaRegUserPlus />
+                                        <FaUserPlus />
                                         <span className="font-extrabold">CREATE A NEW ACCOUNT</span>
                                         <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                                     </Link>
@@ -340,7 +354,7 @@ const Login = () => {
                                     to="/register" 
                                     className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-8 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl animate-bounce-slow"
                                 >
-                                    <FaRegUserPlus className="text-xl" />
+                                    <FaUserPlus className="text-xl" />
                                     <span className="font-extrabold">CREATE A NEW ACCOUNT</span>
                                     <FaArrowRight />
                                 </Link>
@@ -507,7 +521,7 @@ const Login = () => {
                         to="/register" 
                         className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-10 py-4 rounded-xl text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
-                        <FaRegUserPlus className="text-xl" />
+                        <FaUserPlus className="text-xl" />
                         <span className="font-extrabold">CREATE A NEW ACCOUNT - IT'S FREE!</span>
                         <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
                     </Link>
