@@ -324,21 +324,7 @@ const Login = () => {
                                 <div className="flex-grow border-t border-gray-200"></div>
                             </div>
 
-                            {/* Social Login Buttons */}
-                            <div className="grid grid-cols-3 gap-4 mb-8">
-                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 group">
-                                    <FaGoogle className="text-red-500 group-hover:scale-110 transition-transform" />
-                                    <span className="font-medium hidden sm:inline">Google</span>
-                                </button>
-                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-blue-600 hover:bg-blue-50 transition-all duration-300 group">
-                                    <FaFacebookF className="text-blue-600 group-hover:scale-110 transition-transform" />
-                                    <span className="font-medium hidden sm:inline">Facebook</span>
-                                </button>
-                                <button className="flex items-center justify-center gap-2 border-2 border-gray-200 rounded-xl py-3 hover:border-gray-800 hover:bg-gray-50 transition-all duration-300 group">
-                                    <FaApple className="text-gray-800 group-hover:scale-110 transition-transform" />
-                                    <span className="font-medium hidden sm:inline">Apple</span>
-                                </button>
-                            </div>
+
 
                             {/* Enhanced Register Link */}
                             <div className="text-center pt-6 border-t border-gray-200">
