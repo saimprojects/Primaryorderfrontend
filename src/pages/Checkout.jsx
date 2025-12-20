@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+// import { useState, useContext, useEffect } from 'react';
 import api from '../api/axios';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
@@ -173,7 +173,7 @@ const Checkout = () => {
         setFormData(prev => ({ ...prev, province }));
     };
 
-    // 🔥 FIXED: Handle order submission with variant data
+    // 🔥 UPDATED: Handle order submission with form validation and scroll to empty fields
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -186,6 +186,82 @@ const Checkout = () => {
         if (!Array.isArray(cart) || cart.length === 0) {
             toast.error('Your cart is empty');
             navigate('/cart');
+            return;
+        }
+
+        // 🔥 ADDED: Form validation with scroll to first empty field
+        const requiredFields = [
+            { name: 'receiver_name', label: 'Receiver Name' },
+            { name: 'phone', label: 'Phone Number' },
+            { name: 'province', label: 'Province' },
+            { name: 'city', label: 'City' },
+            { name: 'address1', label: 'Complete Address' }
+        ];
+
+        // Check for empty required fields
+        for (const field of requiredFields) {
+            if (!formData[field.name] || formData[field.name].trim() === '') {
+                // Scroll to the form section
+                const formSection = document.getElementById('delivery-form');
+                if (formSection) {
+                    formSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    
+                    // Highlight the empty field
+                    const inputElement = document.querySelector(`[name="${field.name}"]`);
+                    if (inputElement) {
+                        setTimeout(() => {
+                            inputElement.focus();
+                            inputElement.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+                            setTimeout(() => {
+                                inputElement.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+                            }, 3000);
+                        }, 500);
+                    }
+                }
+                
+                toast.error(
+                    <div>
+                        <div className="font-bold">❌ Please Fill Required Fields</div>
+                        <div className="text-sm">{field.label} is required</div>
+                    </div>,
+                    {
+                        position: "top-right",
+                        autoClose: 3000,
+                        theme: "colored",
+                    }
+                );
+                
+                return; // Stop submission
+            }
+        }
+
+        // Phone number validation (Pakistan format)
+        const phoneRegex = /^0[0-9]{10}$/;
+        const cleanPhone = formData.phone.replace(/-/g, '').replace(/\s/g, '');
+        if (!phoneRegex.test(cleanPhone)) {
+            const phoneInput = document.querySelector('[name="phone"]');
+            if (phoneInput) {
+                phoneInput.focus();
+                phoneInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+                setTimeout(() => {
+                    phoneInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+                }, 3000);
+            }
+            
+            toast.error(
+                <div>
+                    <div className="font-bold">📱 Invalid Phone Number</div>
+                    <div className="text-sm">Please enter a valid Pakistani phone number (e.g., 03001234567)</div>
+                </div>,
+                {
+                    position: "top-right",
+                    autoClose: 3000,
+                    theme: "colored",
+                }
+            );
             return;
         }
 
@@ -239,7 +315,7 @@ const Checkout = () => {
                 cart_items: cart_items
             };
 
-            console.log('Submitting order data:', orderData); // 🔍 Debug
+            console.log('Submitting order data:', orderData);
 
             const response = await api.post('/orders/create/', orderData);
             
@@ -435,7 +511,7 @@ const Checkout = () => {
                                     const quantity = parseInt(item.quantity) || 0;
                                     const itemTotal = getItemTotal(item);
 
-                                    console.log(`Item ${index}: Price=${price}, Qty=${quantity}, Total=${itemTotal}`); // 🔍 Debug
+                                    console.log(`Item ${index}: Price=${price}, Qty=${quantity}, Total=${itemTotal}`);
 
                                     return (
                                         <div key={item.id || product.id || index} 
@@ -479,8 +555,8 @@ const Checkout = () => {
                             </div>
                         </div>
 
-                        {/* Delivery Information */}
-                        <div className="bg-white rounded-2xl shadow-xl p-8">
+                        {/* Delivery Information - Added ID for scrolling */}
+                        <div id="delivery-form" className="bg-white rounded-2xl shadow-xl p-8">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="bg-[#FF5C00] text-white p-2 rounded-lg">
                                     <FaTruck className="text-xl" />
@@ -495,7 +571,7 @@ const Checkout = () => {
                                 {/* Receiver Name */}
                                 <div className="space-y-2">
                                     <label className="block text-gray-700 font-medium">
-                                        Receiver's Full Name
+                                        Receiver's Full Name <span className="text-red-500">*</span>
                                     </label>
                                     <div className="relative">
                                         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -517,7 +593,7 @@ const Checkout = () => {
                                     {/* Phone Number */}
                                     <div className="space-y-2">
                                         <label className="block text-gray-700 font-medium">
-                                            Phone Number
+                                            Phone Number <span className="text-red-500">*</span>
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -590,7 +666,7 @@ const Checkout = () => {
                                     {/* Province */}
                                     <div className="space-y-2">
                                         <label className="block text-gray-700 font-medium">
-                                            Province
+                                            Province <span className="text-red-500">*</span>
                                         </label>
                                         <select
                                             name="province"
@@ -611,7 +687,7 @@ const Checkout = () => {
                                     {/* City */}
                                     <div className="space-y-2">
                                         <label className="block text-gray-700 font-medium">
-                                            City
+                                            City <span className="text-red-500">*</span>
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -634,7 +710,7 @@ const Checkout = () => {
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <label className="block text-gray-700 font-medium">
-                                            Complete Address (Street, House #, Area)
+                                            Complete Address (Street, House #, Area) <span className="text-red-500">*</span>
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-4 top-4 text-gray-400">
