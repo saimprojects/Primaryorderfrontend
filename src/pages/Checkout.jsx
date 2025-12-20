@@ -1,16 +1,17 @@
-// import { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import api from '../api/axios';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { 
     FaUser, FaPhone, FaWhatsapp, FaMapMarkerAlt, 
     FaCity, FaCreditCard, FaTruck, FaShieldAlt, 
     FaClock, FaFire, FaCheckCircle, FaLock,
     FaArrowLeft, FaMoneyBillWave, FaRegCreditCard,
     FaExclamationTriangle, FaTag, FaPercent,
-    FaChevronRight, FaPalette, FaRuler, FaBox // 🔥 NEW: Variant icons
+    FaChevronRight, FaPalette, FaRuler, FaBox
 } from 'react-icons/fa';
 
 const Checkout = () => {
@@ -63,43 +64,41 @@ const Checkout = () => {
 
     // 🔥 FIXED: Calculate order summary with variant prices and 200 PKR shipping
     useEffect(() => {
-        console.log('Checkout Cart Data:', cart); // 🔍 Debug
+        console.log('Checkout Cart Data:', cart);
         
         if (Array.isArray(cart) && cart.length > 0) {
             const subtotal = cart.reduce((acc, item) => {
-                console.log('Processing cart item:', item); // 🔍 Debug
+                console.log('Processing cart item:', item);
                 
                 let price = 0;
                 
                 // 🔥 FIXED: Check price from multiple possible sources
                 if (item.selectedVariant) {
-                    // Check variant price from multiple possible keys
                     price = item.selectedVariant.discount_price || 
                             item.selectedVariant.price || 
                             item.selectedVariant.sale_price || 
                             item.selectedVariant.original_price ||
                             0;
-                    console.log('Variant price found:', price); // 🔍 Debug
+                    console.log('Variant price found:', price);
                 } else if (item.product) {
-                    // Check product price from multiple possible keys
                     price = item.product.discount_price || 
                             item.product.price || 
                             item.product.base_price || 
                             item.product.sale_price || 
                             item.product.original_price ||
                             0;
-                    console.log('Product price found:', price); // 🔍 Debug
+                    console.log('Product price found:', price);
                 }
                 
                 const numericPrice = parseFloat(price) || 0;
                 const quantity = parseInt(item.quantity) || 0;
                 
-                console.log('Item calculation:', numericPrice, '*', quantity, '=', numericPrice * quantity); // 🔍 Debug
+                console.log('Item calculation:', numericPrice, '*', quantity, '=', numericPrice * quantity);
                 
                 return acc + (numericPrice * quantity);
             }, 0);
             
-            console.log('Total Subtotal:', subtotal); // 🔍 Debug
+            console.log('Total Subtotal:', subtotal);
             
             // 🔥 UPDATED: 200 PKR shipping, free over 2000
             const freeShippingThreshold = 2000;
@@ -108,7 +107,7 @@ const Checkout = () => {
             const total = subtotal + shipping;
             const itemsCount = cart.reduce((acc, item) => acc + (parseInt(item.quantity) || 0), 0);
 
-            console.log('Order Summary:', { subtotal, shipping, total, itemsCount }); // 🔍 Debug
+            console.log('Order Summary:', { subtotal, shipping, total, itemsCount });
 
             setOrderSummary({
                 subtotal,
@@ -121,7 +120,7 @@ const Checkout = () => {
                 shippingFee
             });
         } else {
-            console.log('Cart is empty or not an array'); // 🔍 Debug
+            console.log('Cart is empty or not an array');
         }
     }, [cart]);
 
